@@ -123,7 +123,10 @@ export class ToolExecutionComponent extends Container {
     this.argsLine.setText(argLine ? theme.dim(argLine) : theme.dim(" "));
 
     const raw = extractText(this.result);
-    const text = raw || (this.isPartial ? "…" : "");
+    let text = raw || (this.isPartial ? "…" : "");
+    if (!text && !this.isPartial && this.isError) {
+      text = "Tool execution failed with no output.";
+    }
     if (!this.expanded && text) {
       const lines = text.split("\n");
       const preview =
